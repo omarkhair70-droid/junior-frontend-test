@@ -43,14 +43,26 @@ async function askCam(){
   if(state.tick)clearInterval(state.tick);
   state.stream?.getTracks().forEach(t=>t.stop());
   state.roi=null;$('stage').classList.remove('marked');
-  const request=navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'user'},width:{ideal:640},height:{ideal:480},frameRate:{ideal:20}},audio:false});
-  let timer;
-  const timeout=new Promise((_,fail)=>{timer=setTimeout(()=>fail(Object.assign(new Error(),{name:'TimeoutError'})),18000)});
+  async function cameraRequest(constraints){
+   let expired=false,timer;
+   const request=navigator.mediaDevices.getUserMedia(constraints);
+   request.then(s=>{if(expired)s.getTracks().forEach(t=>t.stop())}).catch(()=>{});
+   const timeout=new Promise((_,fail)=>{timer=setTimeout(()=>fail(Object.assign(new Error(),{name:'TimeoutError'})),18000)});
+   try{return await Promise.race([request,timeout])}
+   catch(e){expired=true;throw e}
+   finally{clearTimeout(timer)}
+  }
   let stream;
-  try{stream=await Promise.race([request,timeout])}finally{clearTimeout(timer)}
+  try{stream=await cameraRequest({video:{facingMode:{ideal:'user'},width:{ideal:640},height:{ideal:480},frameRate:{ideal:20}},audio:false})}
+  catch(e){
+   if(e.name!=='OverconstrainedError'&&e.name!=='NotFoundError')throw e;
+   stream=await cameraRequest({video:true,audio:false});
+  }
   state.stream=stream;
   const v=$('video');v.srcObject=stream;v.muted=true;v.playsInline=true;
-  await v.play();
+  try{
+   await Promise.race([v.play(),new Promise((_,fail)=>setTimeout(()=>fail(Object.assign(new Error('Video stream paused'),{name:'TimeoutError'})),8000))]);
+  }catch(e){stream.getTracks().forEach(t=>t.stop());state.stream=null;throw e}
   $('stage').classList.add('online');
   $('cameraFlag').textContent='LIVE / LOCAL';
   $('camTip').textContent='الكاميرا شغالة. المس مركز عين واحدة في الصورة.';
