@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10100f">
+  <meta name="description" content="INSIDE — تجربة هاتفية مفتوحة لاختبار ارتباط الإشارات البصرية غير المباشرة بالكلام الداخلي. لا تقيس نشاط المخ.">
+  <title>INSIDE — تحدّي الكلام الداخلي</title>
+  <style>
+    :root{color-scheme:dark;--bg:#10100f;--paper:#181917;--line:#34362f;--ink:#f0eee5;--muted:#a0a196;--acid:#d2e67c;--danger:#ed987f}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif}
+    body:before{content:"";z-index:-1;position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E")}
+    main{width:min(950px,calc(100% - 36px));margin:0 auto;padding:22px 0 80px}.overline,.mono,.smallTag{font:11px/1.5 ui-monospace,Consolas,monospace;letter-spacing:.11em}header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 0 24px;border-bottom:1px solid var(--line)}.logo{display:flex;gap:10px;align-items:center;direction:ltr;font:bold 24px/.9 ui-monospace,Consolas,monospace;letter-spacing:-.09em}.glyph{width:28px;height:28px;border:2px solid var(--acid);border-radius:50%;display:grid;place-items:center;transform:rotate(-18deg)}.glyph:before{content:"";width:9px;height:9px;border:2px solid var(--acid);border-radius:50%}.smallTag{color:var(--acid);text-align:left}
+    .hero{padding:45px 0 34px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end}.eyebrow{font-size:12px;color:var(--acid);letter-spacing:.05em;margin-bottom:16px}.hero h1{font-size:clamp(42px,8vw,85px);line-height:1.13;margin:0 0 19px;letter-spacing:-.065em;font-weight:750;max-width:700px}.hero p{color:var(--muted);font-size:15px;max-width:600px;margin:0;line-height:1.9}.serial{writing-mode:vertical-rl;font:11px ui-monospace,Consolas,monospace;letter-spacing:.17em;color:#73766b}
+    .warning{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:17px 0;display:flex;gap:12px;align-items:flex-start;font-size:13px;line-height:1.7;color:#d4d3c9}.warning strong{color:var(--acid);white-space:nowrap}.grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:18px;margin-top:23px}.panel{background:var(--paper);border:1px solid var(--line);padding:20px}.panelHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:14px;margin-bottom:17px;border-bottom:1px solid var(--line)}.panelHeader h2{font-size:13px;font-weight:650;margin:0}.panelHeader span{color:var(--muted)}.feed{width:100%;aspect-ratio:4/3;position:relative;background:#0a0a09;overflow:hidden;display:flex;align-items:center;justify-content:center}.feed video{height:100%;width:100%;object-fit:cover;transform:scaleX(-1);filter:grayscale(1) contrast(1.2) brightness(.83);opacity:.87}.feed:after{content:"";pointer-events:none;position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.44),transparent 24%,transparent 78%,rgba(0,0,0,.65))}.frameCorner{position:absolute;z-index:2;inset:13px;border:1px solid rgba(240,238,229,.18);pointer-events:none}.videoTop,.videoBottom{position:absolute;z-index:3;right:18px;left:18px;display:flex;justify-content:space-between;color:var(--acid);font:11px ui-monospace,Consolas,monospace;text-shadow:0 1px 3px #000}.videoTop{top:21px}.videoBottom{bottom:21px}.offMessage{position:absolute;text-align:center;color:#93958d;font-size:13px;padding:18px}.videoReady .offMessage{display:none}.statusDot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#696b61;margin-inline-end:6px}.statusDot.on{background:var(--acid);box-shadow:0 0 12px #d2e67c55}.subline{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:12px;margin-top:13px}.phraseGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fieldLabel{display:block;font-size:11px;color:var(--muted);margin-bottom:6px}.textInput{background:#101110;border:1px solid #3e4038;color:var(--ink);border-radius:0;padding:12px;width:100%;font:inherit;font-size:16px;outline:none}.textInput:focus{border-color:var(--acid)}.textInput:disabled{color:#a8aaa0;opacity:.75}.directions{padding:15px 0;margin:9px 0 0;font-size:12px;line-height:1.9;color:var(--muted)}.actions{display:grid;gap:9px}.btn{min-height:52px;border:1px solid var(--acid);background:var(--acid);color:#181a12;padding:11px 15px;font:700 14px/1.5 inherit;font-family:inherit;cursor:pointer;text-align:center;transition:filter .14s}.btn:hover:not(:disabled){filter:brightness(1.09)}.btn:active:not(:disabled){transform:translateY(1px)}.btn:disabled{opacity:.28;cursor:not-allowed}.btn.secondary{background:transparent;color:var(--ink);border-color:#51534a}.btn.secondary:hover{border-color:var(--acid)}.miniBtn{background:none;color:var(--muted);border:0;cursor:pointer;font-family:inherit;text-decoration:underline;text-underline-offset:4px;margin:15px 0 0;padding:5px}
+    .tracker{padding-top:25px;margin-top:26px;border-top:1px solid var(--line)}.trackerTitle{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:12px;color:var(--muted)}.progress{height:4px;background:#36392e;margin-top:10px}.progressFill{height:100%;background:var(--acid);width:0%;transition:width .3s}.cue{background:#111210;border:1px solid #36392f;min-height:135px;padding:19px;display:flex;justify-content:center;flex-direction:column;margin-top:15px}.cue small{font-size:11px;color:var(--muted)}.cue strong{display:block;font-size:clamp(26px,5vw,44px);font-weight:650;letter-spacing:-.04em;margin-top:8px;line-height:1.25}.cue.live{border-color:var(--acid)}.cue.live strong{color:var(--acid)}.cue.waiting strong{color:#9a9d92}.signal{display:flex;align-items:flex-end;gap:3px;height:28px;opacity:.65;margin-top:17px}.signal>i{width:3px;height:3px;background:var(--acid);display:block;transition:height .2s}.cue.live .signal>i{animation:pulse 1.25s ease-in-out infinite alternate}.signal>i:nth-child(3n){animation-delay:.45s}.signal>i:nth-child(4n){animation-delay:.12s}@keyframes pulse{to{height:23px}}
+    .result{display:none;margin-top:20px;border:1px solid var(--line);padding:22px;background:var(--paper)}.result.show{display:block}.bigNumber{font:bold clamp(62px,14vw,116px)/1 ui-monospace,Consolas,monospace;letter-spacing:-.08em;color:var(--acid);direction:ltr;text-align:right;margin:10px 0}.result p{font-size:14px;line-height:1.8;color:#c9c8bf}.result .facts{display:flex;gap:18px;flex-wrap:wrap;margin:21px 0;font:12px/1.7 ui-monospace,Consolas,monospace;color:var(--muted)}.result .facts strong{color:var(--ink)}.trialGrid{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;margin:18px 0}.trialTile{height:22px;background:#56574f}.trialTile.good{background:var(--acid)}.trialTile.bad{background:var(--danger)}.trialTile[title]{cursor:help}.foot{color:#a1a398;font-size:12px;line-height:1.9;border-top:1px solid var(--line);margin-top:33px;padding-top:16px}.foot strong{color:var(--ink)}.hidden{display:none!important}.error{color:var(--danger)!important}.hint{color:var(--acid)!important}.stateText{min-height:22px}
+    @media(max-width:680px){main{width:calc(100% - 30px)}.hero{padding:31px 0 26px}.serial{display:none}.grid{grid-template-columns:1fr}.panel{padding:17px}.hero h1{font-size:clamp(41px,10vw,60px)}.warning{display:block}.warning strong{display:block;margin-bottom:5px}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="logo"><span class="glyph"></span><span>INSIDE<span style="color:var(--acid)">.</span></span></div>
+    <div class="smallTag">EXPERIMENT 001<br>PHONE ONLY / 2026</div>
+  </header>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">مش كلام بصوت. مش حركة شفايف. تجربة قابلة للتكذيب.</div>
+      <h1>قبل ما<br>يتقال.</h1>
+      <p>هل كاميرا موبايل عادي تقدر تلتقط أي أثر غير مباشر لما تقول كلمتين مختلفتين جوا دماغك؟ هنجرّب، وهنسيب نتيجة الاختبار هي اللي تتكلم.</p>
+    </div>
+    <div class="serial">INNER SPEECH / SIGNAL STUDY / V0.1</div>
+  </section>
+  <div class="warning"><strong>مهم / الحقيقة العلمية</strong><span>ده <b>مش جهاز قراءة أفكار</b>، ومش بيسجل إشارات المخ. الكاميرا قد تلتقط تغيّرات ضوئية أو حركات دقيقة لا إرادية، أو مجرد تشويش. أي دقة أعلى من الصدفة مش دليل إن الموبايل قرأ الكلام الداخلي.</span></div>
+  <section class="grid">
+    <section class="panel">
+      <div class="panelHeader"><h2>01 / القناة البصرية</h2><span class="mono">FRONT CAMERA</span></div>
+      <div class="feed" id="feed">
+        <video id="video" autoplay muted playsinline></video>
+        <div class="frameCorner"></div>
+        <div class="videoTop"><span>CAM / 01</span><span id="camState">OFFLINE</span></div>
+        <div class="videoBottom"><span id="frameState">NO DATA</span><span>LOCAL ONLY</span></div>
+        <div class="offMessage">لا توجد إشارة حاليًا<br>ابدأ بتشغيل الكاميرا الأمامية</div>
+      </div>
+      <div class="subline"><span><span class="statusDot" id="dot"></span><span id="cameraText">الكاميرا مقفولة</span></span><span>لا صوت · لا رفع بيانات</span></div>
+      <p class="directions">اسند الموبايل قدام وشك، في إضاءة ثابتة. ممنوع الكلام أو الهمس أو تحريك الشفايف عمدًا. التطبيق ما بيسجلش فيديو أو صورة، بس بيحسب خصائص رقمية من الفريمات داخل المتصفح.</p>
+      <div class="actions"><button class="btn" id="cameraBtn">شغّل الكاميرا</button></div>
+    </section>
+    <section class="panel">
+      <div class="panelHeader"><h2>02 / بروتوكول التحدي</h2><span class="mono">A/B · BLIND TEST</span></div>
+      <div class="phraseGrid">
+        <div><label class="fieldLabel" for="phraseA">الكلمة الأولى / A</label><input id="phraseA" class="textInput" value="أيوه" maxlength="26"></div>
+        <div><label class="fieldLabel" for="phraseB">الكلمة الثانية / B</label><input id="phraseB" class="textInput" value="لأ" maxlength="26"></div>
+      </div>
+      <p class="directions" style="padding-bottom:0">كل محاولة: هتشوف الكلمة للحظة، وبعد ما تختفي هتكررها <b>داخل دماغك فقط</b> لمدة ٣ ثواني تقريبًا. البرنامج بياخد عينات من الكاميرا، ويتعلّم من ٢٤ محاولة. بعدها ٢٠ محاولة اختبار جديدة ومش هيكشف التخمينات لحد ما يخلص.</p>
+      <div class="actions">
+        <button id="trainBtn" class="btn" disabled>ابدأ التدريب / 24 محاولة</button>
+        <button id="testBtn" class="btn hidden" disabled>ابدأ الاختبار الأعمى / 20 محاولة</button>
+      </div>
+      <div class="tracker">
+        <div class="trackerTitle"><span id="phaseText">جاهزين للتجربة</span><span id="counter" class="mono">00 / 44</span></div>
+        <div class="progress"><div class="progressFill" id="progressFill"></div></div>
+        <div class="cue waiting" id="cue"><small id="cueLabel">إشارة التجربة</small><strong id="cueMain">ابدأ بالكاميرا</strong><div class="signal" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="subline stateText" id="note" role="status" aria-live="polite">هنبدأ من غير أي حساب أو تسجيل دخول.</div>
+      </div>
+      <button class="miniBtn" id="resetBtn">صفّر التجربة وابدأ من جديد</button>
+    </section>
+  </section>
+  <section class="result" id="results" aria-live="polite">
+    <div class="panelHeader"><h2>03 / تقرير الاختبار الأعمى</h2><span class="mono">HOLDOUT · N=20</span></div>
+    <div class="eyebrow">نسبة التخمينات الصحيحة</div>
+    <div class="bigNumber" id="accuracy">—</div>
+    <div class="facts"><span>صحيح <strong id="correct">—</strong></span><span>إجمالي <strong>20</strong></span><span>احتمال الصدفة أو أفضل <strong id="pvalue">—</strong></span></div>
+    <div class="trialGrid" id="tiles"></div>
+    <p id="conclusion"></p>
+    <p>اختبارنا بيقيس هل فيه ارتباط إحصائي بين خصائص الكاميرا والكلمتين في هذه الجلسة. حتى لو اتخطينا الصدفة، ممكن السبب يكون ملامح الوجه أو ظروف التصوير أو خلل في البروتوكول، مش الإشارات العصبية.</p>
+    <button class="btn secondary" id="exportBtn">نزّل البيانات والنتيجة بصيغة JSON</button>
+  </section>
+  <footer class="foot"><strong>قواعد النزاهة:</strong> مفيش صوت، مفيش سيرفر، مفيش إجابة محفوظة جوه نموذج التخمين وقت الاختبار. التدريب والاختبار بترتيب عشوائي ومتوازن، والنموذج بيتجمّد قبل الاختبار. بنقارن النتيجة بفرصة 50% لكلمتين. التطبيق ليس أداة طبية، ولا يقيس الدماغ أو الأفكار مباشرة. يُفضّل تشغيله من Chrome في صفحة HTTPS.</footer>
+</main>
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const TRAIN_PER_CLASS = 12, TEST_PER_CLASS = 10;
+const BASELINE_MS = 850, THINK_MS = 2800, CUE_MS = 1400, GAP_MS = 750, REST_MS = 350;
+const SIZE=48, GRID=4, PATCH=SIZE/GRID;
+const captureCanvas=document.createElement('canvas');captureCanvas.width=captureCanvas.height=SIZE;
+const ctx=captureCanvas.getContext('2d',{willReadFrequently:true});
+const state={stream:null,phase:'setup',active:false,sessionId:0,train:[],test:[],model:null,words:['أيوه','لأ'],started:null};
+const getRandom = n => {
+  if(window.crypto && crypto.getRandomValues){const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]%n;}
+  return Math.floor(Math.random()*n);
+};
+function shuffleBalanced(n){const order=[...Array(n).fill(0),...Array(n).fill(1)];for(let i=order.length-1;i>0;i--){const j=getRandom(i+1),x=order[i];order[i]=order[j];order[j]=x;}return order;}
+const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+function setNote(text,cls=''){const el=$('note');el.textContent=text;el.className='subline stateText '+cls;}
+function setCue(label,text,live=false){$('cueLabel').textContent=label;$('cueMain').textContent=text;$('cue').className='cue '+(live?'live':'waiting');}
+function progress(done){$('counter').textContent=String(done).padStart(2,'0')+' / 44';$('progressFill').style.width=(done/44*100)+'%';}
+function setStage(text){$('phaseText').textContent=text;}
+function setCamStatus(text,online){$('camState').textContent=online?'ACTIVE':'OFFLINE';$('cameraText').textContent=text;$('dot').className='statusDot'+(online?' on':'');$('feed').classList.toggle('videoReady',online);}
+async function startCamera(){
+  if(state.active)return;
+  $('cameraBtn').disabled=true;setNote('بنطلب إذن الكاميرا الأمامية…');
+  try{
+    if(!navigator.mediaDevices?.getUserMedia)throw new Error('الكاميرا محتاجة فتح الملف من Chrome على عنوان آمن HTTPS أو file://.');
+    if(state.stream){state.stream.getTracks().forEach(x=>x.stop());state.stream=null;}
+    const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:320},height:{ideal:240},frameRate:{ideal:15}},audio:false});
+    state.stream=s;$('video').srcObject=s;await $('video').play();
+    setCamStatus('الكاميرا شغالة',true);$('frameState').textContent='VIDEO STREAM';$('cameraBtn').textContent='أعد تشغيل الكاميرا';$('cameraBtn').disabled=false;
+    $('trainBtn').disabled=false;setCue('جاهزين','فكرتين. من غير صوت.');setNote('مستعدين. اسند الموبايل وخلي الكاميرا ثابتة.','hint');
+    s.getVideoTracks()[0].addEventListener('ended',()=>{if(state.stream===s){setCamStatus('الكاميرا اتقفلت',false);$('trainBtn').disabled=true;setNote('وصلة الكاميرا انقطعت. شغّلها تاني.','error');state.sessionId++;state.active=false;}});
+  }catch(err){$('cameraBtn').disabled=false;setCamStatus('الكاميرا مش متاحة',false);setNote('تعذّر تشغيل الكاميرا: '+(err.message||err.name),'error');}
+}
+function sampleFrame(){
+  const v=$('video');if(!state.stream||v.readyState<2||!v.videoWidth)return null;
+  const w=v.videoWidth,h=v.videoHeight,side=Math.min(w,h),sx=(w-side)/2,sy=(h-side)/2;
+  ctx.drawImage(v,sx,sy,side,side,0,0,SIZE,SIZE);
+  const pixels=ctx.getImageData(0,0,SIZE,SIZE).data;
+  const patch=new Float64Array(GRID*GRID),counts=new Float64Array(GRID*GRID);let rr=0,gg=0,bb=0;
+  for(let y=0;y<SIZE;y++)for(let x=0;x<SIZE;x++){
+    const i=(y*SIZE+x)*4,r=pixels[i]/255,g=pixels[i+1]/255,b=pixels[i+2]/255;
+    const p=Math.floor(y/PATCH)*GRID+Math.floor(x/PATCH);
+    patch[p]+=.299*r+.587*g+.114*b;counts[p]++;rr+=r;gg+=g;bb+=b;
+  }
+  const avg=patch.reduce((a,b)=>a+b,0)/(SIZE*SIZE);
+  const vals=Array.from(patch,(v,i)=>v/counts[i]-avg);
+  return {vals,r:rr/(SIZE*SIZE),g:gg/(SIZE*SIZE),b:bb/(SIZE*SIZE),brightness:avg};
+}
+async function framesFor(ms,token){
+  const frames=[];const begin=performance.now();
+  while(performance.now()-begin<ms){
+    if(state.sessionId!==token||document.hidden)throw new Error('التجربة اتوقفت لأن الصفحة اتقفلت أو اتغيّرت.');
+    const frame=sampleFrame();if(frame)frames.push(frame);
+    await sleep(90);
+  }
+  return frames;
+}
+const mean=a=>a.reduce((x,y)=>x+y,0)/(a.length||1);
+function makeFeatures(baseline,thought){
+  if(baseline.length<3||thought.length<8)throw new Error('الكاميرا مش بتطلع فريمات كفاية.');
+  const out=[];
+  // Predeclared 16 spatial intensity changes, 16 changes in fluctuation, 16 local movement metrics.
+  for(let k=0;k<GRID*GRID;k++)out.push(mean(thought.map(f=>f.vals[k]))-mean(baseline.map(f=>f.vals[k])));
+  for(let k=0;k<GRID*GRID;k++){
+    const m=mean(thought.map(f=>f.vals[k]));
+    out.push(Math.sqrt(mean(thought.map(f=>(f.vals[k]-m)**2))));
+  }
+  for(let k=0;k<GRID*GRID;k++){
+    let total=0;for(let j=1;j<thought.length;j++)total+=Math.abs(thought[j].vals[k]-thought[j-1].vals[k]);
+    out.push(total/(thought.length-1));
+  }
+  for(const c of ['r','g','b','brightness'])out.push(mean(thought.map(f=>f[c]))-mean(baseline.map(f=>f[c])));
+  return out;
+}
+function fitModel(train){
+  if(train.length!==TRAIN_PER_CLASS*2)throw new Error('عدد عينات التدريب غير كافٍ.');
+  const d=train[0].features.length;
+  if(train.some(x=>x.features.length!==d||x.features.some(v=>!Number.isFinite(v))))throw new Error('عيّنات غير صالحة.');
+  const mu=[],sd=[],centers=[[],[]];
+  for(let j=0;j<d;j++){
+    const vals=train.map(x=>x.features[j]),m=mean(vals);
+    mu.push(m);sd.push(Math.max(.005,Math.sqrt(mean(vals.map(v=>(v-m)**2)))));
+    for(let k=0;k<2;k++)centers[k].push(mean(train.filter(x=>x.label===k).map(x=>(x.features[j]-m)/sd[j])));
+  }
+  return {mu,sd,centers,features:d,trainedOn:train.length};
+}
+function predict(model,features){
+  if(!model||features.length!==model.features)return null;
+  const z=features.map((v,i)=>(v-model.mu[i])/model.sd[i]);
+  const dist=model.centers.map(center=>mean(z.map((v,i)=>(v-center[i])**2)));
+  return dist[0]===dist[1]?getRandom(2):(dist[0]<dist[1]?0:1);
+}
+function binomialTail(k,n){let sum=0;for(let i=k;i<=n;i++){let c=1;for(let j=1;j<=i;j++)c=c*(n-j+1)/j;sum+=c*Math.pow(.5,n);}return sum;}
+async function attempt(label,index,total,kind,token){
+  const allDone=state.train.length+state.test.length;
+  setStage(kind==='train'?'تدريب النموذج · '+(index+1)+' / '+total:'اختبار أعمى · '+(index+1)+' / '+total);
+  setCue('تذكير بالكلمة — من غير نطق',state.words[label]);
+  setNote('احفظ الكلمة في دماغك. الإشارة لسه ما اتسجلتش.');
+  await sleep(CUE_MS);
+  if(state.sessionId!==token)throw new Error('تم إلغاء الجلسة.');
+  setCue('المرحلة الهادئة','جهّز نفسك…');
+  await sleep(GAP_MS);
+  if(state.sessionId!==token)throw new Error('تم إلغاء الجلسة.');
+  setNote('بيسجّل خط أساس من الكاميرا…');
+  const base=await framesFor(BASELINE_MS,token);
+  setCue('سجّل الكلام جوا عقلك الآن','فكّر دلوقتي',true);
+  setNote('كرر الكلمة جوا نفسك — من غير نطق أو أي حركة مقصودة.','hint');
+  const thought=await framesFor(THINK_MS,token);
+  setCue('انتهت المحاولة','✓');
+  const f=makeFeatures(base,thought);
+  if(kind==='train')state.train.push({label,features:f});
+  else {
+    // Crucial: predict() receives only the frozen model and sensor features; never the actual label.
+    const guess=predict(state.model,f);
+    state.test.push({label,guess,features:f});
+  }
+  progress(allDone+1);
+  setNote('اتسجلت محاولة '+(index+1)+' من '+total+'.');
+  await sleep(REST_MS);
+}
+async function begin(kind){
+  if(state.active||!state.stream||!state.stream.active){setNote('شغّل الكاميرا الأول.','error');return;}
+  if(kind==='test'&&!state.model){setNote('محتاجين تدريب النموذج الأول.','error');return;}
+  if(kind==='train'){
+    const a=$('phraseA').value.trim(),b=$('phraseB').value.trim();
+    if(!a||!b||a===b){setNote('اختار كلمتين مختلفتين، وكل واحدة مش فاضية.','error');return;}
+    state.words=[a,b];state.train=[];state.test=[];state.model=null;state.started=new Date().toISOString();
+    $('results').classList.remove('show');progress(0);
+  }
+  const token=++state.sessionId;state.active=true;state.phase=kind;
+  $('cameraBtn').disabled=true;$('trainBtn').disabled=true;$('testBtn').disabled=true;
+  $('phraseA').disabled=true;$('phraseB').disabled=true;$('resetBtn').disabled=true;
+  const order=shuffleBalanced(kind==='train'?TRAIN_PER_CLASS:TEST_PER_CLASS);
+  try{
+    for(let i=0;i<order.length;i++)await attempt(order[i],i,order.length,kind,token);
+    if(kind==='train'){
+      state.model=fitModel(state.train);state.phase='testReady';
+      setStage('تم التدريب. النموذج اتجمّد.');setCue('TRAINING COMPLETE','جاهز للاختبار');
+      setNote('دلوقتي هنجرّب 20 مرة جديدة. التوقعات هتفضل مخفية للنهاية.','hint');
+      $('testBtn').classList.remove('hidden');$('testBtn').disabled=false;
+    }else{
+      state.phase='done';setStage('خلص الاختبار الأعمى');setCue('TEST COMPLETE','النتيجة ظهرت تحت');setNote('اتسجلت التوقعات قبل حساب الإجابات.');showResults();
+    }
+  }catch(err){state.phase='interrupted';setCue('الجلسة توقفت','جرب من جديد');setNote('اتوقفت التجربة: '+err.message+' اعمل تصفير وابدأ من جديد.','error');$('resetBtn').disabled=false;}
+  finally{state.active=false;$('cameraBtn').disabled=false;$('resetBtn').disabled=false;}
+}
+function showResults(){
+  const correct=state.test.filter(x=>x.label===x.guess).length,n=state.test.length,p=binomialTail(correct,n);
+  $('accuracy').textContent=Math.round(correct/n*100)+'%';$('correct').textContent=correct+'/'+n;
+  $('pvalue').textContent=p.toFixed(4);
+  $('tiles').innerHTML='';
+  state.test.forEach((trial,i)=>{const el=document.createElement('span');el.className='trialTile '+(trial.label===trial.guess?'good':'bad');el.title='محاولة '+(i+1)+' · الفكرة: '+state.words[trial.label]+' · التخمين: '+state.words[trial.guess];$('tiles').append(el);});
+  let text='';
+  if(p<=.05 && correct>n/2)text='النتيجة أعلى من توقع الصدفة إحصائيًا في الجلسة دي (اختبار أحادي الطرف). بس ده لا يثبت قراءة أفكار: لازم نكرر التجربة، نختبر تسريب الإضاءة والحركة، ونستخدم ضوابط مستقلة.';
+  else text='مافيش دليل إحصائي كفاية في الجلسة دي إن الكاميرا فرّقت بين الكلمتين أفضل من الصدفة. وده احتمال منطقي جدًا لأننا مش بنقيس نشاط المخ.';
+  $('conclusion').textContent=text;
+  $('results').classList.add('show');$('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function exportData(){
+  const good=state.test.filter(x=>x.label===x.guess).length;
+  const file={experiment:'INSIDE / phone-only indirect signal study',version:'0.1',recordedAt:state.started,finishedAt:new Date().toISOString(),sensor:'front camera only; no audio or EEG',notes:'Labels are randomized. Predictions generated from a fixed model and visual features only. Results do NOT establish neural decoding.',words:state.words,training:state.train,testing:state.test,results:{correct:good,total:state.test.length,accuracy:good/state.test.length,pValueOneSided:binomialTail(good,state.test.length)}};
+  const blob=new Blob([JSON.stringify(file,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='inside-lab-results-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function reset(){
+  if(state.active)return;
+  state.sessionId++;state.phase='setup';state.train=[];state.test=[];state.model=null;
+  $('phraseA').disabled=false;$('phraseB').disabled=false;
+  $('trainBtn').disabled=!state.stream?.active;$('testBtn').classList.add('hidden');$('testBtn').disabled=true;
+  $('results').classList.remove('show');progress(0);setStage('جاهزين للتجربة');setCue('إشارة التجربة',state.stream?.active?'اضغط ابدأ التدريب':'ابدأ بالكاميرا');setNote('تم تصفير النموذج والبيانات.');
+}
+$('cameraBtn').addEventListener('click',startCamera);
+$('trainBtn').addEventListener('click',()=>begin('train'));
+$('testBtn').addEventListener('click',()=>begin('test'));
+$('resetBtn').addEventListener('click',reset);
+$('exportBtn').addEventListener('click',exportData);
+window.addEventListener('pagehide',()=>{state.sessionId++;state.stream?.getTracks().forEach(t=>t.stop());});
+window.addEventListener('visibilitychange',()=>{if(document.hidden&&state.active){setNote('الموبايل خرج من الصفحة. التجربة هتقف لحماية دقة القياس.','error');}});
+// Diagnostic export for local automated smoke tests only; nothing uploads off-device.
+window.INSIDE_DIAGNOSTICS={fitModel,predict,makeFeatures,binomialTail,shuffleBalanced};
+})();
+</script>
+</body>
+</html>
