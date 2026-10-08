@@ -32,25 +32,85 @@ function selectEye(ev){
  positionRoi();say('تمام. الإطار الأخضر على العين، والبرتقالي منطقة مقارنة من الوجه. عدّل المكان بلمسة تانية.','good');
  cue('تم تحديد العين','الآن نقدر نقيس');buttons()
 }
+function cameraAlert(message='',kind=''){
+ const el=$('camAlert');
+ if(!el)return;
+ el.hidden=!message;
+ el.textContent=message;
+ el.className='camAlert '+kind;
+}
+function cameraErrorDescription(err){
+ const n=err?.name||'', m=err?.message||'';
+ if(n==='NotAllowedError'||n==='PermissionDeniedError'||n==='SecurityError')return 'المتصفح منع إذن الكاميرا. افتح الموقع في Chrome الخارجي، واضغط علامة الإعدادات بجانب العنوان ← أذونات الموقع ← الكاميرا ← سماح. بعد كده اعمل تحديث.';
+ if(n==='NotFoundError'||n==='DevicesNotFoundError')return 'المتصفح مش شايف أي كاميرا. تأكد إن كاميرا الموبايل شغالة وإن Chrome مسموح له يستخدمها.';
+ if(n==='NotReadableError'||n==='TrackStartError')return 'الكاميرا مشغولة أو تطبيق تاني حاجزها. اقفل تطبيق الكاميرا والفيديوهات، وبعدها جرب تاني.';
+ if(n==='OverconstrainedError')return 'الكاميرا مش متوافقة مع الإعدادات المطلوبة. جرّب تاني أو افتح من Chrome.';
+ if(n==='TimeoutError')return 'الطلب أخد وقت طويل من غير استجابة. اتأكد إن نافذة إذن الكاميرا مش مستخبية، وافتح الصفحة في Chrome الخارجي.';
+ if(n==='AbortError')return 'تشغيل الكاميرا اتقطع. اقفل أي تطبيق بيستخدم الكاميرا وجرب تاني.';
+ return 'تعذر تشغيل الكاميرا ('+(n||'Unknown')+'): '+(m||'سبب غير معروف')+'. افتح في Chrome، واتأكد من السماح للكاميرا.';
+}
+async function cameraWithTimeout(constraints,timeout=20000){
+ let expired=false,timer;
+ const promise=navigator.mediaDevices.getUserMedia(constraints);
+ const timeoutPromise=new Promise((_,reject)=>{
+  timer=setTimeout(()=>{expired=true;const err=new Error('Camera permission did not resolve');err.name='TimeoutError';reject(err)},timeout)
+ });
+ promise.then(s=>{if(expired)s.getTracks().forEach(t=>t.stop())}).catch(()=>{});
+ try{return await Promise.race([promise,timeoutPromise])}finally{clearTimeout(timer)}
+}
 async function startCamera(){
  if(state.busy)return;
- $('cameraBtn').disabled=true;say('بنطلب إذن استخدام الكاميرا الأمامية…');
+ const btn=$('cameraBtn');
+ btn.disabled=true;btn.textContent='بنطلب إذن الكاميرا…';
+ cameraAlert('بيتم طلب إذن الكاميرا. لو ظهر سؤال من المتصفح، دوس سماح.','pending');
+ say('بنطلب إذن استخدام الكاميرا الأمامية…');
  try{
-  if(!navigator.mediaDevices?.getUserMedia)throw Error('المتصفح محتاج HTTPS علشان يفتح الكاميرا.');
-  if(state.stream)state.stream.getTracks().forEach(t=>t.stop());
-  if(state.ticker)clearInterval(state.ticker);
-  state.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:640},height:{ideal:480},frameRate:{ideal:15}},audio:false});
-  $('video').srcObject=state.stream;await $('video').play();
+  if(!window.isSecureContext||!navigator.mediaDevices?.getUserMedia)throw Object.assign(new Error('الكاميرا غير متاحة في المتصفح الحالي، افتح رابط HTTPS في Chrome الخارجي.'),{name:'SecurityError'});
+  if(state.ticker){clearInterval(state.ticker);state.ticker=null}
+  if(state.stream){state.stream.getTracks().forEach(t=>t.stop());state.stream=null}
+  $('stage').classList.remove('active');
+  let stream;
+  try{
+   stream=await cameraWithTimeout({video:{facingMode:{ideal:'user'},width:{ideal:640},height:{ideal:480},frameRate:{ideal:15}},audio:false});
+  }catch(e){
+   if(e.name!=='OverconstrainedError'&&e.name!=='NotFoundError')throw e;
+   stream=await cameraWithTimeout({video:true,audio:false});
+  }
+  state.stream=stream;
+  const video=$('video');
+  video.muted=true;video.playsInline=true;video.srcObject=stream;
+  try{
+   await Promise.race([video.play(),new Promise((_,reject)=>setTimeout(()=>reject(Object.assign(new Error('Video playback stalled'),{name:'TimeoutError'})),8000))]);
+  }catch(e){stream.getTracks().forEach(t=>t.stop());state.stream=null;throw e}
   $('stage').classList.add('active');
-  $('camLabel').textContent='LIVE · LOCAL';$('cameraBtn').textContent='إعادة تشغيل الكاميرا';
-  $('camDot').classList.add('on');$('cameraText').textContent='كاميرا شغالة · لا يتم حفظ الصور';
+  $('camLabel').textContent='LIVE · LOCAL';
+  $('camDot').classList.add('on');
+  $('cameraText').textContent='الكاميرا شغالة · الصور بتتعالج محليًا';
+  btn.textContent='إعادة تشغيل الكاميرا';
   state.trace=[];state.latest=null;
   state.ticker=setInterval(tick,125);
-  state.stream.getVideoTracks()[0].addEventListener('ended',()=>{say('وصلة الكاميرا اتقفلت. شغّلها من جديد.','error');$('camDot').classList.remove('on');state.nonce++;buttons()});
-  say('المس عين واحدة في صورتك علشان نحدد منطقة القياس.','good');
-  cue('الخطوة التالية','المس عينك في الصورة');buttons()
- }catch(e){say('الكاميرا مش متاحة: '+(e.message||e.name),'error');$('cameraBtn').disabled=false}
+  const track=stream.getVideoTracks()[0];
+  if(track)track.addEventListener('ended',()=>{
+   if(state.stream===stream){
+    say('الكاميرا اتقفلت. شغّلها تاني.','error');
+    cameraAlert('اتقطع اتصال الكاميرا. اقفل التطبيقات اللي ممكن تكون بتستخدمها وجرب تاني.','error');
+    $('camDot').classList.remove('on');state.nonce++;buttons();
+   }
+  });
+  cameraAlert('الكاميرا اشتغلت ✓ المس عين واحدة في الصورة علشان نحدد منطقة القياس.','good');
+  say('الكاميرا اشتغلت. المس عين واحدة في الصورة علشان نحدد مكان القياس.','good');
+  cue('الخطوة التالية','المس عينك في الصورة');
+ }catch(err){
+  const message=cameraErrorDescription(err);
+  $('camLabel').textContent='CAMERA OFFLINE';
+  $('camDot').classList.remove('on');
+  $('cameraText').textContent='الكاميرا مش متاحة';
+  btn.textContent='جرّب تشغيل الكاميرا تاني';
+  cameraAlert(message,'error');
+  say(message,'error');
+ }finally{btn.disabled=false;buttons()}
 }
+
 function region(data,roi){
  const w2=Math.round(W*.11),h2=Math.round(H*.09);
  const xc=Math.round(roi.x*W),yc=Math.round(roi.y*H);
