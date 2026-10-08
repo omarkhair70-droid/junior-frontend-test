@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101617">
+<meta name="description" content="INSIDE Optical Field — معمل محلي لاستكشاف الضوء المنعكس من العين بكاميرا الموبايل. لا يقرأ الأفكار أو النشاط العصبي.">
+<title>INSIDE — Optical Field</title>
+<link rel="stylesheet" href="./eye-field.css">
+</head>
+<body data-light="neutral">
+<div class="ambient" aria-hidden="true"></div>
+<main class="shell">
+<header>
+ <div class="brand"><b>◉</b>INSIDE</div>
+ <div class="edition">OPTICAL FIELD<br>RESEARCH BUILD 002</div>
+</header>
+<section class="hero">
+ <div>
+  <div class="kicker">VISION AS AN INSTRUMENT / 02</div>
+  <h1>طيب، لو العين<br>مش مجرد صورة؟</h1>
+  <p>تجربة حقيقية نحاول فيها استخدام كاميرا الموبايل كأداة قياس ضوئي: نحدد منطقة العين، نفحص الاختلافات الدقيقة في الضوء، ونختبر إن كانت فيها معلومة عن الكلام الداخلي. بدون أجهزة إضافية.</p>
+ </div>
+ <aside>AN EXPERIMENT IN NOT KNOWING YET.</aside>
+</section>
+<div class="rule"><strong>حدود التجربة</strong><span>الكاميرا لا تقيس نشاط المخ، والتغير البصري مش دليل على قراءة الأفكار. دي تجربة استكشافية؛ مفيش صور بتترفع للسيرفر أو بتتخزن في التطبيق.</span></div>
+<div class="workspace">
+ <section class="panel" aria-label="معمل العين">
+  <div class="panelHead"><span><span class="sectionNum">01</span> العين كإشارة ضوئية</span><span class="tiny">CAMERA / PIXEL FIELD</span></div>
+  <div id="stage" class="stage" role="button" tabindex="0" aria-label="المس مكان العين لتحديده في صورة الكاميرا">
+   <video id="video" muted playsinline autoplay aria-label="معاينة الكاميرا الأمامية"></video>
+   <div class="none">الكاميرا لسه مقفولة<br>شغّلها وبعدين المس عينك في الصورة</div>
+   <div class="bracket"></div><span id="camLabel" class="stamp">CAMERA OFFLINE</span>
+   <div id="roiEye" class="roi" data-label="EYE"></div>
+   <div id="roiRef" class="roi ref" data-label="CONTROL"></div>
+  </div>
+  <div class="camFooter"><span><i id="camDot" class="dot"></i><span id="cameraText">الكاميرا متقفلة</span></span><span>اضغط على العين لتحديدها</span></div>
+  <div class="buttons"><button type="button" id="cameraBtn" class="button">تشغيل الكاميرا الأمامية</button></div>
+  <div id="camAlert" class="camAlert" role="status" aria-live="polite" hidden></div>
+  <p class="camTip">لو زر الكاميرا مش بيستجيب، افتح الموقع من <a href="https://inside-thought-lab.vercel.app/" target="_blank" rel="noopener">Chrome الخارجي</a>، وراجع إذن الكاميرا من إعدادات الموقع.</p>
+  <div class="signalTitle"><strong>قياسات البكسل الحيّة</strong><span class="tiny">EYE <span style="color:#e4b77b">/</span> REFERENCE</span></div>
+  <canvas id="signalCanvas" class="signalCanvas" width="600" height="154" aria-label="رسم لحظي لسطوع منطقة العين مقارنة بالخد"></canvas>
+  <div class="values" aria-live="off">
+   <div class="value"><span>فرق السطوع</span><strong id="lum">—</strong></div>
+   <div class="value"><span>فرق اللون R−G</span><strong id="chrom">—</strong></div>
+   <div class="value"><span>انعكاسات ساطعة*</span><strong id="glint">—</strong></div>
+  </div>
+  <p class="note">* نسبة بكسلات فاتحة داخل المربع، مش قياس علمي للحدقة أو لمعان القرنية. الرسم يقيس الضوء فقط.</p>
+ </section>
+ <section class="panel" aria-label="إعداد التجربة">
+  <div class="panelHead"><span><span class="sectionNum">02</span> نجرّب على الضوء</span><span class="tiny">METHOD / LOCAL ONLY</span></div>
+  <div class="step"><span>1</span><div><b>ثبّت الموبايل قدام وشّك</b><p>شغّل الكاميرا، ولمس مركز عين واحدة على المعاينة. الإطار الأخضر للعين، والبرتقالي للخد كنقطة مقارنة. خلي الإضاءة هادئة وثابتة.</p></div></div>
+  <div class="step"><span>2</span><div><b>اختبر الكاميرا مع الضوء</b><p>هنغيّر لون إضاءة الشاشة بشكل هادئ وتدريجي، ونشوف إذا الكاميرا تلاحظ اختلافًا في العين مقارنة بالخد. مفيش فلاش أو وميض سريع.</p></div></div>
+  <button type="button" id="calibrateBtn" class="button secondary" disabled>ابدأ المعايرة الضوئية · ١٠ ثواني</button>
+  <div id="calibration" class="calibration" aria-live="polite"><b id="calibTitle">جاهز للمعايرة</b><p id="calibDetails">هنعرض إضاءة دافئة وباردة ونقارن الاستجابة. لو الكاميرا ما التقطتش الفرق، هنقول كده.</p></div>
+  <hr class="divider">
+  <div class="panelHead"><span><span class="sectionNum">03</span> اختبار الكلام الداخلي</span><span class="tiny">OPTIONAL / BLIND TEST</span></div>
+  <p class="description">ده الجزء الاستكشافي: هل شكل الإشارة يختلف أثناء تكرار كلمتين في دماغك؟ 12 محاولة تدريب و12 اختبار مستقل. الكلمة بتختفي قبل القياس، وبنقارن أداء العين بالخد علشان نستبعد بعض التسريبات.</p>
+  <div class="phrases">
+   <div><label class="label" for="phraseA">الفكرة A</label><input id="phraseA" value="أيوه" autocomplete="off" maxlength="32"></div>
+   <div><label class="label" for="phraseB">الفكرة B</label><input id="phraseB" value="لأ" autocomplete="off" maxlength="32"></div>
+  </div>
+  <div id="prompt" class="prompt" aria-live="polite" aria-atomic="true"><small id="cueLabel">لسه مستكشفين</small><strong id="cueText">ابدأ بتحديد العين</strong></div>
+  <div class="buttons">
+   <button type="button" id="trainBtn" class="button" disabled>ابدأ تدريب الكلام الداخلي · 12 محاولة</button>
+   <button type="button" id="testBtn" class="button secondary hidden" disabled>ابدأ الاختبار الأعمى · 12 محاولة</button>
+   <button type="button" id="resetBtn" class="button ghost">تصفير التجربة</button>
+  </div>
+  <div class="progressline"><span id="trialState">اختبار 24 محاولة اختياري</span><span id="count">0 / 24</span></div>
+  <div class="progressbar"><i id="progressBar"></i></div>
+  <p id="note" class="note" role="status">ابدأ بالكاميرا وبعدها المس عينك في المعاينة.</p>
+  <section id="results" class="results" aria-label="النتائج" aria-live="polite">
+   <div class="panelHead"><span>نتيجة الاختبار الأعمى</span><span class="tiny">NOT A MIND READER</span></div>
+   <div class="scoreboard">
+    <div class="score"><span>العين − الخد</span><b id="eyeAccuracy">—</b></div>
+    <div class="score"><span>الخد وحده</span><b id="controlAccuracy">—</b></div>
+    <div class="score"><span>احتمال الصدفة p</span><b id="chance">—</b></div>
+   </div>
+   <div id="trials" class="trials"></div><p id="judgement"></p>
+   <button id="exportBtn" type="button" class="button secondary">تصدير القياسات JSON</button>
+  </section>
+ </section>
+</div>
+<div class="footer"><span>INSIDE / OPTICAL FIELD / V0.2</span><span>كاميرا فقط · معالجة محلية · لا EEG · <a href="./legacy-v0.1.html">التجربة القديمة V0.1</a></span></div>
+</main>
+<script defer src="./eye-field.js"></script>
+</body>
+</html>
